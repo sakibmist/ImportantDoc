@@ -1,0 +1,10 @@
+Circular reference ignore korar jonno . diye add korte hobe.
+services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+        .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
+        .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+//lazy loading er jonno options er sate add korte hobe, ar er jonno .net core e niche deoa package add korte hobe.
+services.AddDbContext<DataContext>(options => options.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("DataContext")));
+Microsoft.EntityFrameworkCore.Proxies
+cmd > dotnet add package Microsoft.EntityFrameworkCore.Proxies
+ 
