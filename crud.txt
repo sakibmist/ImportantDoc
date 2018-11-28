@@ -1,0 +1,112 @@
+*** add ****
+state = {
+    name: '',
+    age: '',
+    address: '' 
+  };
+
+  baseUrl = "http://localhost:5000/api/person";
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+    //console.log(this.state);
+  };
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const {name, age, address}=this.state;
+    const response = await http.post(this.baseUrl,{name,age,address});
+    if(response.status === 201){
+
+      this.props.history.push('/peoples'); //redirect to another page
+       
+    }
+     
+  }; 
+
+
+
+
+**** del ****
+state={
+peoples:[]
+}
+
+ handleDelete= async(id)=>{
+        
+        const response =await http.delete(`${this.baseUrl}/${id}`);
+        if(response.status === 200){
+            const {peoples}= this.state;
+            const index =peoples.findIndex(people=>people.id === id);
+            if(index>-1){
+                peoples.splice(index,1);
+                this.setState({peoples});
+            }
+            
+        }
+    }
+
+*****for editing bring the data by his id(using params)******
+
+state = {
+        msg: '',
+        person: {
+            name: '',
+            age: '',
+            address: ''
+        }
+    };
+
+    baseUrl = "http://localhost:5000/api/person";
+
+    async componentDidMount() {
+        const { params } = this.props.match;
+        if (!params || !params.id) {
+            this.props.history.goBack();
+            return;
+        }
+        const id = params.id;
+        const response = await http.get(`${this.baseUrl}/${id}`);
+        if (response.status === 200) {
+            const person = response.data;
+            console.log(person);
+            this.setState({ person });
+        } else {
+            this.props.history.goBack();
+            return;
+        }
+    }
+
+    handleChange = (event) => {
+        const { name, value } = event.target;
+        this.setState({
+            person: {
+                ...this.state.person,
+                [name]: value
+            }
+        });
+    };
+
+*** update/put ****
+ updateTodoItem = async () => {
+    const { editId, item, listofItems } = this.state;
+    const response = await http.put(`${this.baseUrl}/${editId}`, {
+      id: editId,
+      name: item
+    });
+    if (response.status === 204) {
+      const index = listofItems.findIndex(todoItem => todoItem.id === editId);
+      if (index > -1) {
+        listofItems[index].name = item;
+        this.setState({
+          listofItems,
+          item: "",
+          editId: null,
+          isEditMode: false
+        });
+      }
+    }
+  };

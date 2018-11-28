@@ -1,0 +1,179 @@
+<div className="offset-1 col-sm-10">
+      <div className="container">
+        <div className="card border">
+          <div className="card-header border">
+            <h1 className="text-center"> Simple Header </h1>
+          </div>
+          <nav className="navbar navbar-expand-lg navbar-blue">
+            <NavLink className="nav-link" to="/app">Brand</NavLink>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item active navSpace">
+                  <NavLink className="nav-link" to="/app">Home</NavLink>
+
+                </li>
+                <li className="nav-item navSpace">
+                  <NavLink className="nav-link" to="/addCustomer">Create Customer.</NavLink>
+                </li>
+                <li className="nav-item dropdown navSpace">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="sd"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Dropdown
+              </a>
+                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a className="dropdown-item" href="d">
+                      Action
+                </a>
+                    <a className="dropdown-item" href="d">
+                      Another action
+                </a>
+                    <div className="dropdown-divider" />
+                     
+                  </div>
+                </li>
+                <li className="nav-item navSpace">
+                <NavLink to="/app" className="nav-link">Show-All</NavLink>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div className="minHeight">
+          <Route path="/addCustomer" component={AddCustomerPage} /> 
+          </div> 
+          <div className="card-footer border">
+            <h6 className="text-center">
+              All rights are reserved by the authority.
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+*********** form *******
+<div className="card-body border minHeight">
+                <div className="offset-2 col-sm-8"> 
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group row">
+                            <label htmlFor="name" className="col-sm-4 col-form-label">
+                                Customer Name
+                            </label>
+                            <div className="col-sm-8">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="name"
+                                    name="name"
+                                    placeholder=""
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="accountNo" className="col-sm-4 col-form-label">
+                               A/C No.
+                    </label>
+                            <div className="col-sm-8">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="accountNo"
+                                    name="accountNo"
+                                    placeholder=""
+                                    onChange={this.handleChange}
+
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="address" className="col-sm-4 col-form-label">
+                                Address
+                    </label>
+                            <div className="col-sm-8">
+
+                                <textarea name="address" id="address" className="form-control" onChange={this.handleChange}></textarea>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <div className="col-sm-4"></div>
+                            <div className="col-sm-8">
+                                <button className="btn  btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+********** display_card*****
+<div className="card-body border minHeight">
+                <div className="offset-2 col-sm-8">
+                    <form onSubmit={this.handleUpdate}>
+                        <div className="form-group row">
+                            <label htmlFor="name" className="col-sm-4 col-form-label">
+                                Customer Name
+                            </label>
+                            <div className="col-sm-8">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="name"
+                                    name="name"
+                                    placeholder=""
+                                    value={name}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="accountNo" className="col-sm-4 col-form-label">
+                                A/C No.
+                            </label>
+                            <div className="col-sm-8">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="accountNo"
+                                    name="accountNo"
+                                    placeholder=""
+                                    value={accountNo}
+                                    onChange={this.handleChange}
+
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="address" className="col-sm-4 col-form-label">
+                                Address
+                             </label>
+                            <div className="col-sm-8">
+                                <textarea name="address" id="address" className="form-control" value={address} onChange={this.handleChange}></textarea>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <div className="col-sm-4"></div>
+                            <div className="col-sm-8">
+                                <button className="btn  btn-primary" type="submit">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>

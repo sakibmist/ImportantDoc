@@ -1,0 +1,71 @@
+[HttpPost("{demo-transaction}")]
+        public IActionResult DemoTransaction(int id, Customer customer)
+        {
+            using(var transaction = _dataContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    var data = _dataContext.Customers.FirstOrDefault(x => x.Id == id);
+                    if (data == null) return null;
+
+                    data.AccountNo = "4573454398574395834";
+                    _dataContext.Customers.Update(data);
+                    _dataContext.SaveChanges();
+
+                    _dataContext.Customers.Remove(data);
+                    _dataContext.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch (System.Exception)
+                {
+                    transaction.Rollback();
+                }
+            }
+        }
+
+**** Eksate onekgulu kaj korar jonno BeginTransaction use kora hoy. like below ******
+[HttpPost]
+        public IActionResult AddTransaction(TransactionDto transactionDto)
+        {
+            using(var transaction = _dataContext.Database.BeginTransaction()) // 
+            {
+                try
+                {
+                    var account = _dataContext.Accounts.FirstOrDefault(x => x.Id == transactionDto.AccountId);
+                    if (account == null) return BadRequest("Account number is invalid");
+                    switch (transactionDto.TransactionMode.ToLower())
+                    {
+                        case "dr":
+                            if (transactionDto.Amount <= 0) return BadRequest("Invalid amount");
+                            if (account.Balance < transactionDto.Amount) return BadRequest("Insufficient Balance");
+                            account.Balance -= transactionDto.Amount;
+                            break;
+                        case "cr":
+                            if (transactionDto.Amount <= 0) return BadRequest("Invalid amount");
+                            account.Balance += transactionDto.Amount;
+                            break;
+                    }
+                    _dataContext.Accounts.Update(account);
+                    _dataContext.SaveChanges();
+
+                    var txn = new Transaction
+                    {
+                        AccountId = transactionDto.AccountId,
+                        Amount = transactionDto.Amount,
+                        CurrentBalance = account.Balance,
+                        TransactionMode = transactionDto.TransactionMode
+                    };
+                    _dataContext.Transactions.Add(txn);
+                    _dataContext.SaveChanges();
+
+                    transaction.Commit();
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return BadRequest(ex.Message);                    
+                }
+            }
+        }
