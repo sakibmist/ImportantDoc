@@ -59,6 +59,22 @@ namespace Todo.Api.Controllers
             }
         }
 
+
+	[HttpGet("check/{accountNo}")]
+        public IActionResult CheckIsAccountNoExists(string accountNo)
+        {
+            try
+            {
+                var isExist = _dataContext.Accounts.Any(x => x.AccountNo.ToLower() == accountNo.ToLower());
+                return Ok(new { IsExist = isExist }); //200
+            }
+            catch (System.Exception)
+            {
+
+                return BadRequest(); //400
+            }
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteById(int id)
         {
