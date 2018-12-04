@@ -1,0 +1,60 @@
+ ****api*******
+
+  [HttpGet("check/{accountNo}")]
+        public IActionResult CheckIsAccountNoExists(string accountNo)
+        {
+            try
+            {
+                var isExist = _dataContext.Accounts.Any(x => x.AccountNo.ToLower() == accountNo.ToLower());
+                return Ok(new { IsExist = isExist }); //200
+            }
+            catch (System.Exception)
+            {
+
+                return BadRequest(); //400
+            }
+        }
+
+**** *******   *****
+
+handleIsAccountExist = async () => {
+    const { accountNo } = this.state;
+    const response = await http.get(`${this.baseUrl}/check/${accountNo}`);
+    if (response.status === 200) {
+      const { isExist: isAccountExist } = response.data;
+      this.setState({ isAccountExist });
+    }
+  };
+
+***onBlur***
+
+<div className="form-group row">
+              <label htmlFor="accountNo" className="col-sm-4 col-form-label">
+                A/C No.
+              </label>
+              <div className="col-sm-8">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="accountNo"
+                  name="accountNo"
+                  placeholder=" A/C No."
+                  onBlur={this.handleIsAccountExist}
+                  onChange={this.handleChange}
+                />
+                {isAccountExist && (
+                  <span className="text-danger">Account Number is already exist!</span>
+                )}
+              </div>
+            </div>
+
+*** Make button disable ***
+
+<div className="form-group row">
+              <div className="col-sm-4" />
+              <div className="col-sm-8">
+                <button className="btn  btn-primary" type="submit" disabled={isAccountExist}>
+                  Create
+                </button>
+              </div>
+            </div>

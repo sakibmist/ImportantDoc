@@ -1,7 +1,6 @@
 import React from "react";
 import http from "axios";
 import { NavLink } from "react-router-dom";
-import PersonIndexPage from "./PersonIndexPage";
 
 class DetailsPage extends React.Component {
   state = {
